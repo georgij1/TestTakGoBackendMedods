@@ -15,26 +15,51 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/hello": {
+        "/api/pets/{id}": {
             "get": {
-                "description": "Простой эндпоинт для примера",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Get pet details",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "example"
+                    "pets"
                 ],
-                "summary": "Возвращает \"Hello, World!\"",
+                "summary": "Get pet by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Pet ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Hello, World!",
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/models.Pet"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Pet": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Fluffy"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "cat"
                 }
             }
         }
@@ -44,11 +69,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/api",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Echo Swagger Example API",
-	Description:      "This is a sample Echo API with Swagger docs.",
+	Title:            "My Echo API",
+	Description:      "",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

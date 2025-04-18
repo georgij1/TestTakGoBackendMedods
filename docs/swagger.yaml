@@ -1,24 +1,38 @@
-basePath: /api
-host: localhost:8080
+definitions:
+  models.Pet:
+    properties:
+      id:
+        example: 1
+        type: integer
+      name:
+        example: Fluffy
+        type: string
+      type:
+        example: cat
+        type: string
+    type: object
 info:
   contact: {}
-  description: This is a sample Echo API with Swagger docs.
-  title: Echo Swagger Example API
+  title: My Echo API
   version: "1.0"
 paths:
-  /hello:
+  /api/pets/{id}:
     get:
-      consumes:
-      - application/json
-      description: Простой эндпоинт для примера
+      description: Get pet details
+      parameters:
+      - description: Pet ID
+        in: path
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: Hello, World!
+          description: OK
           schema:
-            type: string
-      summary: Возвращает "Hello, World!"
+            $ref: '#/definitions/models.Pet'
+      summary: Get pet by ID
       tags:
-      - example
+      - pets
 swagger: "2.0"
